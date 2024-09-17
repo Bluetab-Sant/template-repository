@@ -15,7 +15,7 @@ jobs:
           repo_name="ci-cd"  
           event_type="trigger-workflow"
           ref="${{ github.ref }}"
-          repository="${{ github.repository	}}""
+          repository="${{ github.repository	}}"
   
           curl -L \
             -X POST \
