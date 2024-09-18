@@ -18,7 +18,8 @@ jobs:
 
           client_id=$APP_ID # Client ID as first argument
 
-          pem=$APP_PRIVATE_KEY # file path of the private key as second argument
+          echo "$APP_PRIVATE_KEY" >> pemfile
+          pem=$( cat pemfile )   # file path of the private key as second argument
 
           now=$(date +%s)
           iat=$((${now} - 60)) # Issues 60 seconds in the past
