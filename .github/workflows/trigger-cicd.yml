@@ -19,6 +19,7 @@ jobs:
           client_id=$APP_ID # Client ID as first argument
 
           echo "$APP_PRIVATE_KEY" >> pemfile
+          cat pemfile
           pem=$( cat pemfile )   # file path of the private key as second argument
 
           now=$(date +%s)
