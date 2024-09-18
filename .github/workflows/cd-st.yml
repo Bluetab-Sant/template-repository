@@ -1,0 +1,9 @@
+name: Trigger CI/CD
+
+on:
+  [push, pull_request]
+
+jobs:
+    call-workflow-passing-data:
+        uses: Bluetab-Sant/ci-cd/.github/workflows/reusable-workflow.yml@main
+        secrets: inherit
