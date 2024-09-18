@@ -46,7 +46,7 @@ jobs:
           # Signature
           header_payload="${header}"."${payload}"
           signature=$(
-              openssl dgst -sha256 -sign <(echo -n "${pem}") \
+              openssl dgst -sha256 -sign pemfile \
               <(echo -n "${header_payload}") | b64enc
           )
 
