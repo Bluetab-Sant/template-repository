@@ -23,7 +23,7 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/$repo_owner/$repo_name/dispatches \
-            -f "event_type=$trigger-workflow" -F "client_payload[unit]=false" -F "client_payload[integration]=true" \
+            -f "event_type=$event_type" -F "client_payload[unit]=false" -F "client_payload[integration]=true" \
             -f "client_payload[ref]=$ref" -f "client_payload[repository]=$repository"
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
