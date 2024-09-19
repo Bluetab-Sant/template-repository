@@ -16,45 +16,21 @@ jobs:
             private-key: ${{ secrets.APP_PRIVATE_KEY }}
             owner: ${{ github.repository_owner }}  
 
-      # - name: Use the token
-      #   env:
-      #       GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-      #   run: |
-      #       gh api octocat
-
       - name: Trigger Workflow in CI/CD Repository
         run: |
-          # Set the required variables
-          repo_owner="Bluetab-Sant" 
-          repo_name="ci-cd"  
-          event_type="trigger-workflow"
-          repository="${{ github.repository	}}"
-          ref="${{ github.ref }}"
-  
-          curl -L \
-            -X POST \
+          gh api \
+            --method POST \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GH_TOKEN" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/$repo_owner/$repo_name/dispatches \
-            -d "{\"event_type\": \"$event_type\", \"client_payload\": {\"ref\": \"$ref\", \"repository\": \"$repository\", "unit":false, \"integration\": true}}"
+            /repos/$repo_owner/$repo_name/dispatches \
+            -f "event_type=$repo_owner" -F "client_payload[unit]=false" -F "client_payload[integration]=true" \
+            -f "client_payload[ref]=$ref" -f "client_payload[repository]=$repository"
         env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}            
-
-      # - name: Trigger Workflow in CI/CD Repository
-      #   run: |
-      #     gh api \
-      #       --method POST \
-      #       -H "Accept: application/vnd.github+json" \
-      #       -H "X-GitHub-Api-Version: 2022-11-28" \
-      #       /repos/$repo_owner/$repo_name/dispatches \
-      #       -f "event_type=$repo_owner" -F "client_payload[unit]=false" -F "client_payload[integration]=true"
-      #   env:
-      #     GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-      #     repo_owner: "Bluetab-Sant" 
-      #     repo_name: "ci-cd"  
-      #     event_type: "trigger-workflow"
-      #     repository: ${{ github.repository	}}
-      #     ref: ${{ github.ref }}
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+          repo_owner: "Bluetab-Sant" 
+          repo_name: "ci-cd"  
+          event_type: "trigger-workflow"
+          repository: ${{ github.repository	}}
+          ref: ${{ github.ref }}
 
                   
