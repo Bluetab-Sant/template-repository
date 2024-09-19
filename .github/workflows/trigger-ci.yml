@@ -21,6 +21,17 @@ jobs:
         run: |
             gh api octocat
 
+      - name: Use the token
+        run: |
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/$repo_owner/$repo_name/actions/runs
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+          repo_owner: "Bluetab-Sant" 
+          repo_name: "ci-cd"     
+
       - name: Trigger Workflow in CI/CD Repository
         run: |
           # Set the required variables
@@ -56,13 +67,4 @@ jobs:
           repository: ${{ github.repository	}}
           ref: ${{ github.ref }}
 
-      - name: Use the token
-        run: |
-          gh api \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/$repo_owner/$repo_name/actions/runs
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-          repo_owner: "Bluetab-Sant" 
-          repo_name: "ci-cd"                       
+                  
