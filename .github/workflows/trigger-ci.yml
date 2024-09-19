@@ -14,23 +14,13 @@ jobs:
         with:
             app-id: ${{ vars.APP_ID }}
             private-key: ${{ secrets.APP_PRIVATE_KEY }}
+            owner: ${{ github.repository_owner }}  
 
-      - name: Use the token
-        env:
-            GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-        run: |
-            gh api octocat
-
-      - name: Use the token
-        run: |
-          gh api \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/$repo_owner/$repo_name/actions/runs
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-          repo_owner: "Bluetab-Sant" 
-          repo_name: "ci-cd"     
+      # - name: Use the token
+      #   env:
+      #       GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+      #   run: |
+      #       gh api octocat
 
       - name: Trigger Workflow in CI/CD Repository
         run: |
@@ -51,20 +41,20 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}            
 
-      - name: Trigger Workflow in CI/CD Repository
-        run: |
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/$repo_owner/$repo_name/dispatches \
-            -f "event_type=$repo_owner" -F "client_payload[unit]=false" -F "client_payload[integration]=true"
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-          repo_owner: "Bluetab-Sant" 
-          repo_name: "ci-cd"  
-          event_type: "trigger-workflow"
-          repository: ${{ github.repository	}}
-          ref: ${{ github.ref }}
+      # - name: Trigger Workflow in CI/CD Repository
+      #   run: |
+      #     gh api \
+      #       --method POST \
+      #       -H "Accept: application/vnd.github+json" \
+      #       -H "X-GitHub-Api-Version: 2022-11-28" \
+      #       /repos/$repo_owner/$repo_name/dispatches \
+      #       -f "event_type=$repo_owner" -F "client_payload[unit]=false" -F "client_payload[integration]=true"
+      #   env:
+      #     GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+      #     repo_owner: "Bluetab-Sant" 
+      #     repo_name: "ci-cd"  
+      #     event_type: "trigger-workflow"
+      #     repository: ${{ github.repository	}}
+      #     ref: ${{ github.ref }}
 
                   
