@@ -15,6 +15,12 @@ jobs:
             app-id: ${{ vars.APP_ID }}
             private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
+      - name: Use the token
+        env:
+            GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+            gh api octocat
+
       - name: Trigger Workflow in CI/CD Repository
         run: |
           # Set the required variables
