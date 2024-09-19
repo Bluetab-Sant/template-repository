@@ -1,4 +1,4 @@
-name: Trigger CI
+name: Trigger CD
 
 on:
   [push, pull_request]
